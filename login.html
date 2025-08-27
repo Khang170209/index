@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ログイン & 登録 - Truyền Thông Nhật Bản</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0; padding: 0;
+      height: 100%;
+      font-family: 'Kosugi Maru', sans-serif;
+      background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+      user-select: none;
+    }
+
+    .container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+      width: 440px;
+      max-width: 95vw;
+      padding: 40px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    .container::before {
+      content: "";
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 180px;
+      height: 180px;
+      background: #ff8fa3;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: 0;
+      opacity: 0.6;
+      animation: pulse 6s infinite alternate;
+    }
+    .container::after {
+      content: "";
+      position: absolute;
+      bottom: -60px;
+      left: -60px;
+      width: 160px;
+      height: 160px;
+      background: #ffbbbc;
+      border-radius: 50%;
+      filter: blur(60px);
+      z-index: 0;
+      opacity: 0.5;
+      animation: pulse 6s infinite alternate-reverse;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.5; }
+      100% { transform: scale(1.1); opacity: 0.7; }
+    }
+
+    h1 {
+      font-weight: 700;
+      font-size: 28px;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 1;
+      color: #e0486d;
+      text-align: center;
+    }
+
+    /* Tab buttons */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 28px;
+      gap: 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .tab-btn {
+      font-size: 18px;
+      font-weight: 700;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #999;
+      padding-bottom: 4px;
+      transition: color 0.3s, border-bottom 0.3s;
+      user-select: none;
+    }
+    .tab-btn.active {
+      color: #e0486d;
+      border-bottom: 3px solid #e0486d;
+    }
+
+    form {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+    }
+    form.active {
+      display: flex;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      padding: 14px 16px;
+      border-radius: 10px;
+      border: 2px solid #eee;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+      outline-offset: 2px;
+      outline-color: transparent;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #e0486d;
+      outline-color: #f3c6c9;
+      background: #fff7f8;
+    }
+
+    button.submit-btn {
+      background: #e0486d;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 0;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 8px 20px rgba(224, 72, 109, 0.4);
+      user-select: none;
+    }
+    button.submit-btn:hover {
+      background: #c93f5c;
+      box-shadow: 0 10px 25px rgba(201, 63, 92, 0.6);
+    }
+
+    .language-select {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      background: transparent;
+      border: none;
+      font-size: 14px;
+      color: #999;
+      cursor: pointer;
+      z-index: 10;
+      font-weight: 600;
+      user-select: none;
+    }
+    .language-select option {
+      color: #333;
+    }
+
+    .social-login {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 28px;
+      position: relative;
+      z-index: 1;
+    }
+    .social-btn {
+      flex: 1;
+      max-width: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-weight: 700;
+      font-size: 14px;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+    }
+    .social-btn:hover {
+      transform: scale(1.05);
+    }
+    .social-google {
+      background: #db4437;
+    }
+    .social-facebook {
+      background: #3b5998;
+    }
+    .social-apple {
+      background: #000000;
+    }
+
+    .footer-link {
+      margin-top: 24px;
+      font-size: 14px;
+      color: #666;
+      transition: color 0.3s;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+      width: 100%;
+      user-select: none;
+    }
+    .footer-link:hover {
+      color: #e0486d;
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 460px) {
+      .container {
+        width: 95vw;
+        padding: 30px 24px;
+      }
+      input[type="text"], input[type="email"], input[type="password"], button.submit-btn {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" role="main" aria-label="ログイン & 登録フォーム">
+
+    <select class="language-select" id="language-select" aria-label="言語選択">
+      <option value="ja">日本語</option>
+      <option value="vi">Tiếng Việt</option>
+      <option value="en">English</option>
+    </select>
+
+    <h1 id="form-title">ログイン</h1>
+
+    <div class="tabs" role="tablist" aria-label="ログインと登録の切り替え">
+      <button class="tab-btn active" id="tab-login" role="tab" aria-selected="true" aria-controls="login-form" tabindex="0">ログイン</button>
+      <button class="tab-btn" id="tab-register" role="tab" aria-selected="false" aria-controls="register-form" tabindex="-1">登録</button>
+    </div>
+
+    <!-- Đăng nhập -->
+    <form id="login-form" class="active" autocomplete="off" novalidate>
+      <input
+        type="text"
+        id="login-username"
+        name="username"
+        placeholder="ユーザー名またはメール"
+        aria-label="ユーザー名またはメール"
+        required
+        autocomplete="username"
+      />
+      <input
+        type="password"
+        id="login-password"
+        name="password"
+        placeholder="パスワード"
+        aria-label="パスワード"
+        required
+        autocomplete="current-password"
+      />
+      <button type="submit" class="submit-btn" id="login-button">ログイン</button>
+
+      <div class="social-login" aria-label="他のプラットフォームでログイン">
+        <div class="social-btn social-google" tabindex="0" role="button" aria-pressed="false" aria-label="Googleでログイン">
+          Google
+        </div>
+        <div class="social-btn social-facebook" tabindex="0" role="button" aria-pressed="false" aria-label="Facebookでログイン">
+          Facebook
+        </div>
+        <div class="social-btn social-apple" tabindex="0" role="button" aria-pressed="false" aria-label="Appleでログイン">
+          Apple
+        </div>
+      </div>
+      <a href="#" class="footer-link" id="to-register-link">アカウントがありませんか？登録はこちら</a>
+    </form>
+
+    <!-- Đăng ký -->
+    <form id="register-form" autocomplete="off" novalidate>
+      <input
+        type="text"
+        id="register-username"
+        name="username"
+        placeholder="ユーザー名"
+        aria-label="ユーザー名"
+        required
+        autocomplete="username"
+      />
+      <input
+        type="email"
+        id="register-email"
+        name="email"
+        placeholder="メールアドレス"
+        aria-label="メールアドレス"
+        required
+        autocomplete="email"
+      />
+      <input
+        type="password"
+        id="register-password"
+        name="password"
+        placeholder="パスワード"
+        aria-label="パスワード"
+        required
+        autocomplete="new-password"
+      />
+      <input
+        type="password"
+        id="register-password-confirm"
+        name="password-confirm"
+        placeholder="パスワード確認"
+        aria-label="パスワード確認"
+        required
+        autocomplete="new-password"
+      />
+      <button type="submit" class="submit-btn" id="register-button">登録</button>
+      <a href="#" class="footer-link" id="to-login-link">すでにアカウントがありますか？ログインはこちら</a>
+    </form>
+
+  </div>
+
+  <script>
+    // Dữ liệu đa ngôn ngữ
+    const translations = {
+      ja: {
+        loginTitle: "ログイン",
+        loginUsernamePlaceholder: "ユーザー名またはメール",
+        loginPasswordPlaceholder: "パスワード",
+        loginButton: "ログイン",
+        registerTitle: "登録",
+        registerUsernamePlaceholder: "ユーザー名",
+        registerEmailPlaceholder: "メールアドレス",
+        registerPasswordPlaceholder: "パスワード",
+        registerPasswordConfirmPlaceholder: "パスワード確認",
+        registerButton: "登録",
+        loginAlertEmptyUsername: "ユーザー名またはメールを入力してください。",
+        loginAlertEmptyPassword: "パスワードを入力してください。",
+        loginSuccess: "ログイン成功！ようこそ、",
+        registerAlertEmptyUsername: "ユーザー名を入力してください。",
+        registerAlertEmptyEmail: "メールアドレスを入力してください。",
+        registerAlertInvalidEmail: "正しいメールアドレスを入力してください。",
+        registerAlertEmptyPassword: "パスワードを入力してください。",
+        registerAlertPasswordMismatch: "パスワードが一致しません。",
+        registerSuccess: "登録成功！ようこそ、",
+        toRegisterText: "アカウントがありませんか？登録はこちら",
+        toLoginText: "すでにアカウントがありますか？ログインはこちら"
+      },
+      vi: {
+        loginTitle: "Đăng nhập",
+        loginUsernamePlaceholder: "Tên đăng nhập hoặc email",
+        loginPasswordPlaceholder: "Mật khẩu",
+        loginButton: "Đăng nhập",
+        registerTitle: "Đăng ký",
+        registerUsernamePlaceholder: "Tên đăng nhập",
+        registerEmailPlaceholder: "Email",
+        registerPasswordPlaceholder: "Mật khẩu",
+        registerPasswordConfirmPlaceholder: "Xác nhận mật khẩu",
+        registerButton: "Đăng ký",
+        loginAlertEmptyUsername: "Vui lòng nhập tên đăng nhập hoặc email.",
+        loginAlertEmptyPassword: "Vui lòng nhập mật khẩu.",
+        loginSuccess: "Đăng nhập thành công! Chào mừng, ",
+        registerAlertEmptyUsername: "Vui lòng nhập tên đăng nhập.",
+        registerAlertEmptyEmail: "Vui lòng nhập email.",
+        registerAlertInvalidEmail: "Vui lòng nhập email hợp lệ.",
+        registerAlertEmptyPassword: "Vui lòng nhập mật khẩu.",
+        registerAlertPasswordMismatch: "Mật khẩu không khớp.",
+        registerSuccess: "Đăng ký thành công! Chào mừng, ",
+        toRegisterText: "Bạn chưa có tài khoản? Đăng ký tại đây",
+        toLoginText: "Bạn đã có tài khoản? Đăng nhập tại đây"
+      },
+      en: {
+        loginTitle: "Login",
+        loginUsernamePlaceholder: "Username or Email",
+        loginPasswordPlaceholder: "Password",
+        loginButton: "Login",
+        registerTitle: "Register",
+        registerUsernamePlaceholder: "Username",
+        registerEmailPlaceholder: "Email",
+        registerPasswordPlaceholder: "Password",
+        registerPasswordConfirmPlaceholder: "Confirm Password",
+        registerButton: "Register",
+        loginAlertEmptyUsername: "Please enter username or email.",
+        loginAlertEmptyPassword: "Please enter password.",
+        loginSuccess: "Login successful! Welcome, ",
+        registerAlertEmptyUsername: "Please enter username.",
+        registerAlertEmptyEmail: "Please enter email.",
+        registerAlertInvalidEmail: "Please enter a valid email.",
+        registerAlertEmptyPassword: "Please enter password.",
+        registerAlertPasswordMismatch: "Passwords do not match.",
+        registerSuccess: "Registration successful! Welcome, ",
+        toRegisterText: "Don't have an account? Register here",
+        toLoginText: "Already have an account? Login here"
+      }
+    };
+
+    // Các phần tử UI
+    const langSelect = document.getElementById('language-select');
+    const formTitle = document.getElementById('form-title');
+    const tabLogin = document.getElementById('tab-login');
+    const tabRegister = document.getElementById('tab-register');
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    const toRegisterLink = document.getElementById('to-register-link');
+    const toLoginLink = document.getElementById('to-login-link');
+
+    // Inputs Login
+    const loginUsernameInput = document.getElementById('login-username');
+    const loginPasswordInput = document.getElementById('login-password');
+    const loginButton = document.getElementById('login-button');
+
+    // Inputs Register
+    const registerUsernameInput = document.getElementById('register-username');
+    const registerEmailInput = document.getElementById('register-email');
+    const registerPasswordInput = document.getElementById('register-password');
+    const registerPasswordConfirmInput = document.getElementById('register-password-confirm');
+    const registerButton = document.getElementById('register-button');
+
+    // Ngôn ngữ mặc định
+    let currentLang = 'ja';
+
+    // Kiểm tra email hợp lệ
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
+
+    // Cập nhật giao diện theo ngôn ngữ
+    function updateLanguage(lang) {
+      currentLang = lang;
+      const t = translations[lang];
+
+      // Tiêu đề & tab
+      formTitle.textContent = tabLogin.classList.contains('active') ? t.loginTitle : t.registerTitle;
+      tabLogin.textContent = t.loginTitle;
+      tabRegister.textContent = t.registerTitle;
+
+      // Login placeholders & button
+      loginUsernameInput.placeholder = t.loginUsernamePlaceholder;
+      loginPasswordInput.placeholder = t.loginPasswordPlaceholder;
+      loginButton.textContent = t.loginButton;
+
+      // Register placeholders & button
+      registerUsernameInput.placeholder = t.registerUsernamePlaceholder;
+      registerEmailInput.placeholder = t.registerEmailPlaceholder;
+      registerPasswordInput.placeholder = t.registerPasswordPlaceholder;
+      registerPasswordConfirmInput.placeholder = t.registerPasswordConfirmPlaceholder;
+      registerButton.textContent = t.registerButton;
+
+      // Link chuyển đổi
+      toRegisterLink.textContent = t.toRegisterText;
+      toLoginLink.textContent = t.toLoginText;
+    }
+
+    // Chuyển tab
+    function switchTab(toLogin) {
+      if (toLogin) {
+        tabLogin.classList.add('active');
+        tabLogin.setAttribute('aria-selected', 'true');
+        tabLogin.setAttribute('tabindex', '0');
+
+        tabRegister.classList.remove('active');
+        tabRegister.setAttribute('aria-selected', 'false');
+        tabRegister.setAttribute('tabindex', '-1');
+
+        loginForm.classList.add('active');
+        registerForm.classList.remove('active');
+
+        formTitle.textContent = translations[currentLang].loginTitle;
+
+      } else {
+        tabLogin.classList.remove('active');
+        tabLogin.setAttribute('aria-selected', 'false');
+        tabLogin.setAttribute('tabindex', '-1');
+
+        tabRegister.classList.add('active');
+        tabRegister.setAttribute('aria-selected', 'true');
+        tabRegister.setAttribute('tabindex', '0');
+
+        loginForm.classList.remove('active');
+        registerForm.classList.add('active');
+
+        formTitle.textContent = translations[currentLang].registerTitle;
+      }
+      clearInputs();
+      updateLanguage(currentLang);
+    }
+
+    // Xóa dữ liệu input mỗi lần chuyển tab
+    function clearInputs() {
+      loginForm.reset();
+      registerForm.reset();
+    }
+
+    // Xử lý sự kiện tab click
+    tabLogin.addEventListener('click', () => switchTab(true));
+    tabRegister.addEventListener('click', () => switchTab(false));
+
+    // Chuyển tab bằng link dưới form
+    toRegisterLink.addEventListener('click', e => {
+      e.preventDefault();
+      switchTab(false);
+      toRegisterLink.blur();
+    });
+    toLoginLink.addEventListener('click', e => {
+      e.preventDefault();
+      switchTab(true);
+      toLoginLink.blur();
+    });
+
+    // Chuyển đổi ngôn ngữ
+    langSelect.addEventListener('change', e => {
+      updateLanguage(e.target.value);
+    });
+
+    // Xử lý đăng nhập
+    loginForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const t = translations[currentLang];
+      const username = loginUsernameInput.value.trim();
+      const password = loginPasswordInput.value;
+
+      if (!username) {
+        alert(t.loginAlertEmptyUsername);
+        loginUsernameInput.focus();
+        return;
+      }
+      if (!password) {
+        alert(t.loginAlertEmptyPassword);
+        loginPasswordInput.focus();
+        return;
+      }
+
+      // Giả lập login thành công
+      alert(t.loginSuccess + username);
+
+      // Chuyển trang chính
+      window.location.href = 'truyenthongnhatban.html';
+    });
+
+    // Xử lý đăng ký
+    registerForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const t = translations[currentLang];
+      const username = registerUsernameInput.value.trim();
+      const email = registerEmailInput.value.trim();
+      const password = registerPasswordInput.value;
+      const passwordConfirm = registerPasswordConfirmInput.value;
+
+      if (!username) {
+        alert(t.registerAlertEmptyUsername);
+        registerUsernameInput.focus();
+        return;
+      }
+      if (!email) {
+        alert(t.registerAlertEmptyEmail);
+        registerEmailInput.focus();
+        return;
+      }
+      if (!validateEmail(email)) {
+        alert(t.registerAlertInvalidEmail);
+        registerEmailInput.focus();
+        return;
+      }
+      if (!password) {
+        alert(t.registerAlertEmptyPassword);
+        registerPasswordInput.focus();
+        return;
+      }
+      if (password !== passwordConfirm) {
+        alert(t.registerAlertPasswordMismatch);
+        registerPasswordConfirmInput.focus();
+        return;
+      }
+
+      alert(t.registerSuccess + username);
+      registerForm.reset();
+
+      // Chuyển về tab login sau khi đăng ký thành công
+      switchTab(true);
+    });
+
+    // Xử lý nút social login (giả lập)
+    document.querySelectorAll('.social-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        alert(`Bạn vừa chọn đăng nhập bằng ${btn.textContent.trim()}`);
+      });
+      btn.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          btn.click();
+        }
+      });
+    });
+
+    // Khởi tạo lần đầu
+    updateLanguage(currentLang);
+
+  </script>
+</body>
+</html>
