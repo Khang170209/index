@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Văn Hóa Truyền Thống Nhật Bản</title>
+
+  <!-- Font chữ -->
+  <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&display=swap" rel="stylesheet" />
+
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Sawarabi Mincho', serif;
+      background: linear-gradient(135deg, #f7f1e3, #f1e6d7);
+      color: #3a3a3a;
+      line-height: 1.6;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      transition: background-color 0.5s, color 0.5s;
+    }
+    a {
+      color: #b83227;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    a:hover {
+      color: #7d2e22;
+    }
+
+    header {
+      background: #f2e9e4;
+      padding: 50px 20px 40px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+    }
+    header h1 {
+      font-size: 3rem;
+      color: #b83227;
+      margin-bottom: 10px;
+    }
+    header p {
+      font-size: 1.3rem;
+      color: #7d4c41;
+      font-style: italic;
+    }
+
+    nav {
+      background: #fff;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 15px 10px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav a {
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: background-color 0.3s;
+    }
+    nav a:hover, nav a.active {
+      background-color: #b83227;
+      color: #fff;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 0 15px 60px;
+    }
+    section {
+      background: #fff;
+      border-radius: 20px;
+      padding: 25px 30px;
+      margin-bottom: 50px;
+      box-shadow: 0 10px 20px rgb(184 50 39 / 0.15);
+      transition: box-shadow 0.3s ease;
+    }
+    section:hover {
+      box-shadow: 0 12px 25px rgb(184 50 39 / 0.3);
+    }
+    section h2 {
+      font-size: 2rem;
+      color: #b83227;
+      margin-bottom: 12px;
+      border-left: 6px solid #b83227;
+      padding-left: 12px;
+    }
+    section p {
+      font-size: 1.15rem;
+      color: #4a4a4a;
+      line-height: 1.8;
+      margin-bottom: 15px;
+    }
+
+    .images-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-top: 10px;
+    }
+    .images-grid img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 6px 16px rgb(184 50 39 / 0.3);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .images-grid img:hover {
+      transform: scale(1.05);
+    }
+    .caption {
+      font-size: 0.9rem;
+      color: #7d4c41;
+      margin-top: 5px;
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* Contact & Map */
+    #contact {
+      background: #fff;
+      border-radius: 20px;
+      padding: 25px 30px;
+      margin-bottom: 50px;
+      box-shadow: 0 10px 20px rgb(184 50 39 / 0.15);
+    }
+    #contact h2 {
+      font-size: 2rem;
+      color: #b83227;
+      margin-bottom: 20px;
+      border-left: 6px solid #b83227;
+      padding-left: 12px;
+    }
+    #contact p {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      color: #4a4a4a;
+    }
+    #map-container {
+      margin-top: 20px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgb(184 50 39 / 0.3);
+    }
+
+    footer {
+      background: #b83227;
+      color: #fff;
+      text-align: center;
+      padding: 25px 15px;
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+
+    /* Back to top button */
+    #backToTop {
+      position: fixed;
+      right: 30px;
+      bottom: 30px;
+      background-color: #b83227;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(184,50,39,0.6);
+      opacity: 0.75;
+      transition: opacity 0.3s ease;
+      display: none;
+      z-index: 10000;
+    }
+    #backToTop:hover {
+      opacity: 1;
+    }
+
+    /* Dark Mode */
+    body.dark-mode {
+      background: linear-gradient(135deg, #2e2e2e, #1a1a1a);
+      color: #ccc;
+    }
+    body.dark-mode header {
+      background: #3b1a17;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    }
+    body.dark-mode header h1,
+    body.dark-mode nav a:hover, 
+    body.dark-mode nav a.active {
+      color: #f3b7b2;
+    }
+    body.dark-mode nav {
+      background: #2a1817;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.7);
+    }
+    body.dark-mode nav a {
+      color: #f3b7b2;
+    }
+    body.dark-mode main section {
+      background: #3b1a17;
+      box-shadow: 0 10px 20px rgba(243, 183, 178, 0.25);
+    }
+    body.dark-mode section h2 {
+      border-left-color: #f3b7b2;
+      color: #f3b7b2;
+    }
+    body.dark-mode footer {
+      background: #7d2822;
+      color: #ffe7e3;
+    }
+    body.dark-mode #backToTop {
+      background-color: #7d2822;
+      box-shadow: 0 6px 12px rgba(125,40,34,0.8);
+    }
+
+    /* Dark Mode toggle button */
+    #darkToggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #b83227;
+      border: none;
+      color: white;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(184,50,39,0.7);
+      z-index: 10001;
+      transition: background-color 0.3s;
+    }
+    #darkToggle:hover {
+      background-color: #7d2822;
+    }
+
+    /* Music control button */
+    #musicToggle {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #b83227;
+      border: none;
+      color: white;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(184,50,39,0.7);
+      z-index: 10001;
+      transition: background-color 0.3s;
+    }
+    #musicToggle:hover {
+      background-color: #7d2822;
+    }
+
+    /* Sakura petals */
+    .petal {
+      position: fixed;
+      width: 22px;
+      height: 22px;
+      background-image: url('https://i.imgur.com/xXvOXJO.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      opacity: 0.7;
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      z-index: 5000;
+    }
+    @keyframes fall {
+      0% {
+        transform: translateY(-30px) rotate(0deg);
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2.1rem;
+      }
+      nav {
+        gap: 15px;
+        padding: 10px 5px;
+      }
+      nav a {
+        font-size: 1rem;
+        padding: 5px 10px;
+      }
+      main {
+        margin: 30px auto;
+        padding: 0 10px 40px;
+      }
+      section {
+        padding: 20px 15px;
+      }
+      section h2 {
+        font-size: 1.5rem;
+      }
+      #darkToggle, #musicToggle {
+        padding: 10px 14px;
+        font-size: 14px;
+      }
+      #backToTop {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        right: 15px;
+        bottom: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Văn Hóa Truyền Thống Nhật Bản</h1>
+    <p>Khám phá những nét đẹp đặc trưng của xứ sở hoa anh đào</p>
+  </header>
+
+  <nav>
+    <a href="#festival" class="active">Lễ hội</a>
+    <a href="#kimono">Kimono</a>
+    <a href="#food">Ẩm thực</a>
+    <a href="#tea">Trà đạo</a>
+    <a href="#ikebana">Ikebana</a>
+    <a href="#contact">Liên hệ</a>
+  </nav>
+
+  <main>
+    <section id="festival">
+      <h2>Lễ hội Nhật Bản</h2>
+      <p>Lễ hội Nhật Bản mang đậm nét văn hóa truyền thống và tín ngưỡng, diễn ra quanh năm với nhiều sự kiện đặc sắc như Gion Matsuri, Obon, và Tanabata. Đây là dịp để người dân thể hiện lòng biết ơn và cầu mong sự bình an.</p>
+      <div class="images-grid">
+        <div>
+          <img src="https://cdn.bookingtour.vn/upload/2024/11/10/mceu_31358575911731256364456.jpg" alt="Lễ hội Gion Matsuri" />
+<a href="lehoiGion.html" target="_blank">
+    <div class="caption">Lễ hội Gion Matsuri ở Kyoto</div>
+</a>
+
+        </div>
+        <div>
+          <img src="https://mia.vn/media/uploads/blog-du-lich/le-hoi-obon-3-1746758313.jpg" alt="Lễ hội Obon" />
+          <a href="lehoiObon.html" target="_blank">
+      <div class="caption">Lễ hội Obon tưởng nhớ tổ tiên</div>
+</a>
+
+</a>
+
+        </div>
+        <div>
+          <img src="https://trungtamnhatngu.edu.vn/uploads/blog/2023_07/tanataba-tai-nhat-ban-1.jpg" alt="Lễ hội Tanabata" />
+         <a href="https://vi.wikipedia.org/wiki/Tanabata" target="_blank">
+    <div class="caption">Lễ hội Tanabata - lễ hội nguyện ước</div>
+</a>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="kimono">
+      <h2>Kimono - Trang phục truyền thống</h2>
+      <p>Kimono là biểu tượng của sự tinh tế và trang nhã trong văn hóa Nhật Bản. Mỗi chi tiết trên chiếc kimono đều mang ý nghĩa đặc biệt và thể hiện phong cách cũng như địa vị xã hội.</p>
+      <div class="images-grid">
+        <div>
+          <img src="https://i.bbcosplay.com/13822/kimono-trang-hong-1.jpg" alt="Trang phục Kimono" />
+          <div class="caption">Phụ nữ mặc Kimono truyền thống</div>
+        </div>
+        <div>
+          <img src="https://ussinavietnam.vn/wp-content/uploads/2024/10/kimono.jpeg" alt="Kimono hoa văn đẹp" />
+          <div class="caption">Kimono hoa văn rực rỡ</div>
+        </div>
+        <div>
+          <img src="https://img.bestdealplus.com/ae04/kf/Hf412fa45bba04781a26514cb6e0513caK.jpg" alt="Kimono nam giới" />
+          <div class="caption">Kimono dành cho nam giới</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="food">
+      <h2>Ẩm thực Nhật Bản</h2>
+      <p>Ẩm thực Nhật nổi tiếng với sự tươi ngon và nghệ thuật trình bày tinh tế. Các món như sushi, sashimi, tempura, và ramen không chỉ ngon mà còn thể hiện nét văn hóa đặc sắc.</p>
+      <div class="images-grid">
+        <div>
+          <img src="https://sushiworld.com.vn/wp-content/uploads/2023/11/c.jpg" alt="Ẩm thực Sushi" />
+          <div class="caption">Đĩa sushi đa dạng</div>
+        </div>
+        <div>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Shoyu_Ramen.jpg/1200px-Shoyu_Ramen.jpg" alt="Món Ramen" />
+          <div class="caption">Món Ramen nóng hổi</div>
+        </div>
+        <div>
+          <img src="https://www.huongnghiepaau.com/wp-content/uploads/2017/08/cach-lam-tempura-tom.jpg" alt="Tempura" />
+          <div class="caption">Tempura giòn rụm</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tea">
+      <h2>Trà đạo (Chadō)</h2>
+      <p>Trà đạo là nghệ thuật thưởng trà đầy thiền vị, thể hiện sự tôn trọng, thanh tịnh và hài hòa với thiên nhiên qua các nghi lễ tinh tế.</p>
+      <div class="images-grid">
+        <div>
+          <img src="https://vj-prod-website-cms.s3.ap-southeast-1.amazonaws.com/538989508-1675500462272.jpg" alt="Trà đạo Nhật Bản" />
+          <div class="caption">Nghi lễ trà đạo truyền thống</div>
+        </div>
+        <div>
+          <img src="https://sakuramontessori.edu.vn/wp-content/uploads/2019/11/trai-nghiem-thuong-tra-theo-phong-cach-nguoi-nhat-ban-cua-smisers-duong-kinh-8.jpg" alt="Thưởng trà" />
+          <div class="caption">Thưởng trà và giáo dục</div>
+        </div>
+        <div>
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMk_ABTVQaUIsmBWHfnEEGWG7kPqFxvMb61A&s" alt="Phòng trà đạo" />
+          <div class="caption">Phòng trà đạo trang trọng</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ikebana">
+      <h2>Ikebana - Nghệ thuật cắm hoa</h2>
+      <p>Ikebana là nghệ thuật cắm hoa truyền thống của Nhật Bản, chú trọng sự cân bằng, hài hòa và biểu đạt cảm xúc qua từng cành hoa và không gian.</p>
+      <div class="images-grid">
+        <div>
+          <img src="https://www.elle.vn/app/uploads/2019/02/26/ikebana-0.jpg" alt="Ikebana" />
+          <div class="caption">Bài cắm hoa Ikebana thanh lịch</div>
+        </div>
+        <div>
+          <img src="https://daycamhoa.com/wp-content/uploads/2024/01/mua-he.jpg" alt="Hoa Ikebana" />
+          <div class="caption">Hoa và cành hài hòa</div>
+        </div>
+        <div>
+          <img src="https://kilala.vn/data/uploads/2024/301020241551-1730278288-ikebana5.jpg" alt="Triển lãm Ikebana" />
+          <div class="caption">Triển lãm nghệ thuật Ikebana</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Liên hệ</h2>
+      <p><strong>Địa chỉ:</strong> 123 Đường Sakura, Quận Shibuya, Tokyo, Nhật Bản</p>
+      <p><strong>Điện thoại:</strong> +81 90 1234 5678</p>
+      <p><strong>Email:</strong> lienhe@vanhoanhatban.jp</p>
+
+      <div id="map-container">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3240.508010481963!2d139.70056971525818!3d35.65910818019938!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188b4944fdb1d1%3A0x6a5ccf1a4edc5e3e!2sShibuya%20Crossing!5e0!3m2!1svi!2sjp!4v1692574800000!5m2!1svi!2sjp"
+          width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Văn Hóa Nhật Bản. Bản quyền thuộc về người tạo.
+  </footer>
+
+  <!-- Nút lên đầu trang -->
+  <button id="backToTop" title="Lên đầu trang">&#8679;</button>
+
+  <!-- Chuyển đổi chế độ sáng/tối -->
+  <button id="darkToggle" title="Chuyển đổi chế độ sáng/tối">🌗</button>
+
+  <!-- Nút bật/tắt nhạc nền -->
+  <button id="musicToggle" title="Bật / Tắt nhạc nền">Nhạc 🎵</button>
+
+  <!-- Nhạc nền -->
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2021/09/16/audio_d4b4b19b40.mp3?filename=japanese-flute-traditional-14750.mp3" type="audio/mpeg" />
+    Trình duyệt không hỗ trợ âm thanh.
+  </audio>
+
+  <!-- Sakura petals container -->
+  <div id="sakuraContainer"></div>
+
+  <script>
+    // Chuyển tab active khi click nav
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        navLinks.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Nút lên đầu trang
+    const backToTopBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 300) {
+        backToTopBtn.style.display = 'block';
+      } else {
+        backToTopBtn.style.display = 'none';
+      }
+    });
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Dark Mode toggle
+    const darkToggle = document.getElementById('darkToggle');
+    darkToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      if(document.body.classList.contains('dark-mode')){
+        localStorage.setItem('darkMode', 'enabled');
+      } else {
+        localStorage.removeItem('darkMode');
+      }
+    });
+    // Lưu trạng thái dark mode
+    if(localStorage.getItem('darkMode') === 'enabled'){
+      document.body.classList.add('dark-mode');
+    }
+
+    // Nhạc nền
+    const bgMusic = document.getElementById('bgMusic');
+    const musicToggle = document.getElementById('musicToggle');
+    bgMusic.volume = 0.2;
+    bgMusic.play();
+
+    musicToggle.addEventListener('click', () => {
+      if(bgMusic.paused){
+        bgMusic.play();
+        musicToggle.textContent = 'Nhạc 🎵';
+      } else {
+        bgMusic.pause();
+        musicToggle.textContent = 'Tắt Nhạc 🔇';
+      }
+    });
+
+    // Sakura petals effect
+    const sakuraContainer = document.getElementById('sakuraContainer');
+
+    function createPetal() {
+      const petal = document.createElement('div');
+      petal.classList.add('petal');
+      petal.style.left = Math.random() * window.innerWidth + 'px';
+      petal.style.animationDuration = (7 + Math.random() * 6) + 's';
+      petal.style.animationDelay = Math.random() * 10 + 's';
+      petal.style.opacity = (0.5 + Math.random() * 0.5);
+      sakuraContainer.appendChild(petal);
+
+      // Remove petals after animation ends
+      setTimeout(() => {
+        petal.remove();
+      }, 13000);
+    }
+
+    setInterval(createPetal, 300);
+  </script>
+
+</body>
+</html>
